@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
     def index
-        @pages = Page.all
-        gon.val = @pages.first
+        # @pages = Page.all
+        # gon.val = @pages.first
         
     end
     
@@ -16,7 +16,7 @@ class PagesController < ApplicationController
         # @page.yelp(params[:mydata])
         # gon.val2 =  @page.yelp(params[:mydata])
         
-        x = params[:mydata]
+        @x = params[:mydata]
         # Page.yelp(x)
         # gon.val2 = @num
         @myresult = Page.yelp(x)
@@ -27,9 +27,9 @@ class PagesController < ApplicationController
         
         respond_to do |format|
             # {redirect_to '/'}
-            # format.html 
+            # format.html
             # format.js 
-            format.json {render json: @myresult}
+            format.json {render json: @x}
         end
     end
 end
