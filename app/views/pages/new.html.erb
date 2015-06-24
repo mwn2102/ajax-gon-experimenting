@@ -39,8 +39,8 @@
 </select>
 </div>
 
-<%= form_for @page, html: {id: "hidden_form"} do |f| %> 
-    <%= f.text_field :coords %><br> 
+<%= form_for (@page), html: {id: "hidden_form"}, remote: true do |f| %> 
+    <%= f.text_field :score %><br> 
     <%= f.submit "Update" %> 
 <% end %>
 

@@ -80,20 +80,25 @@ $(function() {
             for (var i=0; i<points.length; i++) {
               myarr.push(points[i].A + "," + points[i].F);
             }
-            console.log(myarr);
+            // console.log(myarr);
+           
+           $('button').on('click',function(){
+              $('#hidden_form').val(123);
+              $('#hidden_form').submit();
+              console.log(gon.val4);
+          });
            
             
             $.ajax({
-              type: "POST",
-              url: '/pages/calculate',
-              dataType: 'JSONP',
-              data: {mydata: myarr},
+              type: "GET",
+              url: '/pages/new',
               success: function(msg) {
-                alert("it worked");
+                console.log(msg);
                 }
+              });
                 
             //     // JSON.stringify(points)
-            });
+           
     
             
         }

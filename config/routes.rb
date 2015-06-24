@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  root 'pages#index'
+  root 'pages#new'
   resources :pages
   post 'pages/calculate' => 'pages#calculate'
   
