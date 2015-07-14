@@ -3,6 +3,9 @@ class PagesController < ApplicationController
         # @pages = Page.all
         # gon.val = @pages.first
         # @page = Page.new
+        
+        gon.val4 = @myresult
+
     end
     
     def calculate
@@ -35,23 +38,36 @@ class PagesController < ApplicationController
     
     def new
         @page = Page.new
+        # @result = Page.last.coords
+        gon.result = Page.yelp(Page.last.coords)
     end
     
     def create 
       @page = Page.new(page_params)
-      x = Page.yelp(@page.score)
-      gon.val4 = Page.yelp(@page.score)
+      x = Page.yelp(@page.coords)
+    #   gon.val4 = Page.yelp(@page.score)
       if @page.save 
-        # redirect_to new_page_path
-        render json: x
+        flash[:notice] =  "it worked"
+        # redirect_to '/'
+        render json: @page.coords
+        
+        
+        # render json: x
       else 
+        # redirect_to '/'
+        flash[:notice] =  "it did not work"
         render 'new' 
+        
       end 
+    end
+    
+    def show
+      @page = Page.last.coords
     end
     
     private 
         def page_params 
-          params.require(:page).permit(:score) 
+          params.require(:page).permit(:name, :score, :coords) 
         end
     
     

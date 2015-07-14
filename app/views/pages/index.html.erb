@@ -39,10 +39,11 @@
 </select>
 </div>
 
-<%= form_for @page, html: {id: "hidden_form"} do |f| %> 
-    <%= f.text_field :coords %><br> 
-    <%= f.submit "Update" %> 
+<%= form_tag html: {id: "hidden_form"}, remote: true do %> 
+    <%= hidden_field_tag "coords" %>
+    <%= submit_tag "Update" %> 
 <% end %>
+
 
 
 

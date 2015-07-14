@@ -40,9 +40,10 @@
 </div>
 
 <%= form_for (@page), html: {id: "hidden_form"}, remote: true do |f| %> 
-    <%= f.text_field :score %><br> 
-    <%= f.submit "Update" %> 
+    <%= f.hidden_field "coords" %>
+    <%= f.submit%> 
 <% end %>
+
 
 
 

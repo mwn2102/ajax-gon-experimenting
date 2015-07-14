@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'gon'
 gem 'jquery-turbolinks'
+gem 'yelp', require: 'yelp'
 
 
 # Use ActiveModel has_secure_password

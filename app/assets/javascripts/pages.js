@@ -34,6 +34,7 @@ $(function() {
     }
     
     function calcRoute() {
+      
       var start = document.getElementById('start').value;
       var end = document.getElementById('end').value;
       var request = {
@@ -74,28 +75,47 @@ $(function() {
             polyline.setMap(map);
             var result = document.getElementById('result');
             var points = polyline.GetPointsAtDistance(16000);
-            result.innerHTML = polyline.GetPointsAtDistance(16000);
-           
+            // result.innerHTML = polyline.GetPointsAtDistance(16000);
+
             var myarr = [];
             for (var i=0; i<points.length; i++) {
               myarr.push(points[i].A + "," + points[i].F);
             }
             // console.log(myarr);
+            
+            $('input').val(points);
+            $('#hidden_form').submit();
+            var testing = $('input').val();
+            console.log(testing);
+            
+            $("#result").html(gon.result);
            
-           $('button').on('click',function(){
-              $('#hidden_form').val(123);
-              $('#hidden_form').submit();
-              console.log(gon.val4);
-          });
+          // $('button').on('click',function(){
+          //     // $('#hidden_form').val(123);
+          //     $('#coords').val(points);
+          //     $('#hidden_form').submit();
+          //     var testing = $('#coords').val();
+          //     console.log(testing);
+              
+              // console.log();
+              
+              // console.log(gon.val4);
+        
+              // $.ajax({
+              // type: "GET",
+              // url: '/pages/create',
+              // // data: points,  
+              // success: function(msg) {
+              //   console.log("it worked");
+              //   },
+              //   error: function(msg){
+              //     console.log('error');
+              //   }
+              // });
+          // });
            
             
-            $.ajax({
-              type: "GET",
-              url: '/pages/new',
-              success: function(msg) {
-                console.log(msg);
-                }
-              });
+            
                 
             //     // JSON.stringify(points)
            
@@ -114,6 +134,8 @@ $(function() {
     
     $('button').on('click',function(){
             calcRoute();
+            // alert(gon.result);
+            // $("#result").html(gon.result);
     });
     
     // function markMap(x){

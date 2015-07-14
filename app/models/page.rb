@@ -2,7 +2,42 @@ class Page < ActiveRecord::Base
     # @num = 0
     # require 'yelp'
     
-    def self.yelp(coords)
+    def self.yelp(x)
+        
+        client = Yelp::Client.new({ consumer_key: 'DU6vJO_0TOHbAIdbeAI2Pg',
+                            consumer_secret: '2KAD0X53jSCuJHRzxZrYXW8GZQY',
+                            token: 'qgbaDr7ijqigxc0eAacziVPDDWpeYwWr',
+                            token_secret: 'J8jwjVRXw2fn4GEeWkucJvqJDk4'
+                          })
+
+        params = { term: 'restaurants',
+                   limit: 2,
+                 }
+                
+        arr = x.scan(/(-*\d+\.\d+)(,\s)(-*\d+\.\d+)/)
+        len = arr.length
+        c = 0
+        # m = 1
+        info = []
+        len.times do
+            
+            coordinates = { latitude: arr[c][0].to_f, longitude: arr[c][2].to_f }
+            response = client.search_by_coordinates(coordinates, params)
+            response.businesses.each do |z|
+                info << [z.name, z.rating.to_s, z.location.display_address]
+                # m +=1
+            end
+            
+            c +=1
+        end
+        return info #wasn't working with just info, needed the return too
+        
+        #turn info into an arrays for each restaurant within each array
+        
+        
+        
+        
+        
         # val2 = coords
         # val2 = val2.to_i
         # num = val2 * 10
@@ -33,8 +68,6 @@ class Page < ActiveRecord::Base
         #     arr = []
         #     main << arr
         # end
-        x = coords
-        return x
     end
 end
 
