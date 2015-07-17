@@ -33,6 +33,10 @@ $(function() {
     //     End
     }
     
+    function printResult(){
+        $("#result").html(gon.result);
+    }
+    
     function calcRoute() {
       
       var start = document.getElementById('start').value;
@@ -58,7 +62,7 @@ $(function() {
                 startLocation.latlng = legs[i].start_location;
                 startLocation.address = legs[i].start_address;
                 // marker = google.maps.Marker({map:map,position: startLocation.latlng});
-    //             marker = createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
+                // marker = createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
               }
               endLocation.latlng = legs[i].end_location;
               endLocation.address = legs[i].end_address;
@@ -88,7 +92,7 @@ $(function() {
             var testing = $('input').val();
             console.log(testing);
             
-            $("#result").html(gon.result);
+            // $("#result").html(gon.result);
            
           // $('button').on('click',function(){
           //     // $('#hidden_form').val(123);
@@ -134,6 +138,7 @@ $(function() {
     
     $('button').on('click',function(){
             calcRoute();
+            printResult();
             // alert(gon.result);
             // $("#result").html(gon.result);
     });
