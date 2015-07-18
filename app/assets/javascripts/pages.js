@@ -13,11 +13,13 @@ $(function() {
     var directionsService = new google.maps.DirectionsService();
     var map;
     var polyline = null; 
+    var geocoder;
       
     
     function initialize() {
       directionsDisplay = new google.maps.DirectionsRenderer();
       var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+      geocoder = new google.maps.Geocoder(); 
       var mapOptions = {
         zoom:7,
         center: chicago
@@ -26,15 +28,29 @@ $(function() {
       directionsDisplay.setMap(map);
     //   Begin
         polyline = new google.maps.Polyline({
-        path: [],
-        strokeColor: '#FF0000',
-        strokeWeight: 3
+        // path: [],
+        // strokeColor: '#FF0000',
+        // strokeWeight: 3
         });
     //     End
     }
     
+    var addresses = gon.result; //can I put this here!!!???
+    
     function printResult(){
-        $("#result").html(gon.result);
+            $("#result").html('');
+            $("#result").append("<tr><th>Restaurant</th><th>Rating</th><th>Address</th></tr>");
+            $.each(gon.result, function(i, val){
+              $("#result").append("<tr><td>" + val[0] + " </td><td>" + val[1] + " </td><td>" + val[2] + "</td></tr>");
+              
+            });
+          
+          //watch space between .each and () !!!
+          // "<tr><td>" + val[i][0] + "</td></tr>" i + ' ' + val[0]
+          // issue: there was no val[i] because val was already the specific element of the array!
+          //issue: needed to append instead of html ... html was overriding!
+          
+          
     }
     
     function calcRoute() {
@@ -80,7 +96,8 @@ $(function() {
             var result = document.getElementById('result');
             var points = polyline.GetPointsAtDistance(16000);
             // result.innerHTML = polyline.GetPointsAtDistance(16000);
-
+            
+            //What is this code below?
             var myarr = [];
             for (var i=0; i<points.length; i++) {
               myarr.push(points[i].A + "," + points[i].F);
@@ -89,8 +106,14 @@ $(function() {
             
             $('input').val(points);
             $('#hidden_form').submit();
-            var testing = $('input').val();
-            console.log(testing);
+            
+            for (var i = 0; i < addresses.length; i++) {
+                geocodeAddress(addresses, i);
+            }
+            
+            printResult();
+            // var testing = $('input').val();
+            // console.log(testing);
             
             // $("#result").html(gon.result);
            
@@ -126,19 +149,14 @@ $(function() {
     
             
         }
-        
       });
-      
-      
-      
-    
     }
     
     google.maps.event.addDomListener(window, 'load', initialize);
     
     $('button').on('click',function(){
             calcRoute();
-            printResult();
+            // printResult();
             // alert(gon.result);
             // $("#result").html(gon.result);
     });
@@ -146,15 +164,52 @@ $(function() {
     // function markMap(x){
     //     $("#result").html("It worked! Data is:" + x);
     // }
+    
+    
+    function geocodeAddress(addresses, i) {
+      setTimeout(function () {
+      console.log('working');
+      var title = addresses[i][0];
+      var address = addresses[i][2];
+      geocoder.geocode({
+          'address': addresses[i][2].toString()
+        },
+    
+        function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            console.log('working inside');
+            var marker = new google.maps.Marker({
+    //           icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+              map: map,
+              position: results[0].geometry.location,
+              title: i + 1 + '. ' + title
+    //           animation: google.maps.Animation.DROP,
+    //           address: address,
+    //           url: url
+            });
+            
+              
+    
+            infoWindow(marker, map, title);
+    //         bounds.extend(marker.getPosition());
+    //         map.fitBounds(bounds);
+          } else {
+            alert("geocode of " + address + " failed:" + status);
+          }
+        });
+      }, i * 1000);
+    
+    }
+    
+    function infoWindow(marker, map, title) {
+      google.maps.event.addListener(marker, 'click', function() {
+        iw = new google.maps.InfoWindow({
+          content: title,
+          maxWidth: 350
+        });
+        iw.open(map, marker);
+      });
+    }
      
 });
 
-
-
-   // $('button').on('click',function(){
-    //     // mystring = JSON.stringify(gon.val);
-    //     // $('#mydiv').html(mystring);
-    //     // alert(gon.val.name);
-        
-    //     var number = 10;
-    // });
