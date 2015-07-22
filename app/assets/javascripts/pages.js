@@ -35,7 +35,7 @@ $(function() {
     //     End
     }
     
-    var addresses = gon.result; //can I put this here!!!???
+    // var addresses = gon.result; //can I put this here!!!???
     
     function printResult(){
             $("#result").html('');
@@ -44,7 +44,7 @@ $(function() {
               $("#result").append("<tr><td>" + val[0] + " </td><td>" + val[1] + " </td><td>" + val[2] + "</td></tr>");
               
             });
-          
+
           //watch space between .each and () !!!
           // "<tr><td>" + val[i][0] + "</td></tr>" i + ' ' + val[0]
           // issue: there was no val[i] because val was already the specific element of the array!
@@ -106,6 +106,8 @@ $(function() {
             
             $('input').val(points);
             $('#hidden_form').submit();
+            
+            var addresses = gon.result; //
             
             for (var i = 0; i < addresses.length; i++) {
                 geocodeAddress(addresses, i);

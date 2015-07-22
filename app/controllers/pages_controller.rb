@@ -39,17 +39,39 @@ class PagesController < ApplicationController
     def new
         @page = Page.new
         # @result = Page.last.coords
-        gon.result = Page.yelp(Page.last.coords)
+        gon.result = Page.yelp(Page.last.coords) #gon needs to be defined to show map 
+        respond_to do |format|
+          format.html
+          format.json
+        end
+        
     end
+    
+    # def new  #experiment new
+    #   @test_page = Page.new
+    #   @page = Page.new(page_params)
+    #   if @page.save 
+    #     gon.result = Page.yelp(@page.coords)
+    #     render json: gon.result
+    #   end
+    # end
     
     def create 
       @page = Page.new(page_params)
-      x = Page.yelp(@page.coords)
+      # gon.result = Page.yelp(@page.coords) #this was working
     #   gon.val4 = Page.yelp(@page.score)
       if @page.save 
-        flash[:notice] =  "it worked"
+        gon.result = Page.yelp(@page.coords)
+        # flash.now =  "it worked"
         # redirect_to '/'
-        render json: @page.coords
+        render json: {location: @page}      #this was working with @page.coords
+        # render @page
+        # render edit_page_path(@page)   #new stuff
+        # respond_to do |format|
+        #   format.html
+        #   format.json
+        # end
+
         
         
         # render json: x
@@ -62,7 +84,24 @@ class PagesController < ApplicationController
     end
     
     def show
-      @page = Page.last.coords
+      # @page = Page.last.coords
+      @page = Page.find(params[:id])
+      # gon.result = Page.yelp(Page.last.coords)  crossing out
+    end
+    
+    def update
+      @page = Page.find(params[:id])
+      @page.update(page_params)
+      flash.notice = "Article Updated!"
+      gon.result = Page.yelp(@page.coords)
+      if @page.save
+        render edit_page_path(@page)
+      end
+    end
+    
+    def edit
+      @page = Page.find(params[:id])
+      gon.result = Page.yelp(Page.last.coords)
     end
     
     private 

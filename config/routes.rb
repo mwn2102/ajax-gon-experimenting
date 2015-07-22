@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   
   root 'pages#new'
+  post 'pages/:id' => 'pages#update'   #new route
   resources :pages
   post 'pages/calculate' => 'pages#calculate'
   post '/' => 'pages#create'
+  
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
