@@ -1,22 +1,15 @@
-// # Place all the behaviors and hooks related to the matching controller here.
-// # All this logic will automatically be available in application.js.
-// # You can use CoffeeScript in this file: http://coffeescript.org/
-
-
-
-
-
-$(function() {
-    if ($('#new_page').length) {
+$(document).ready(function(){
+    if ($('#container').length) {
+        
     
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
     var map;
     var polyline = null; 
     var geocoder;
-      
+    $('#result').html("working?");
     
-    function initialize() {
+    // function initialize() {
       directionsDisplay = new google.maps.DirectionsRenderer();
       var chicago = new google.maps.LatLng(41.850033, -87.6500523);
       geocoder = new google.maps.Geocoder(); 
@@ -33,30 +26,30 @@ $(function() {
         // strokeWeight: 3
         });
     //     End
-    }
-    // $('#result').html("working?");
-    // var addresses = gon.result; //can I put this here!!!???
-    
-    // function printResult(){
-    //         $("#result").html('');
-    //         $("#result").append("<tr><th>Restaurant</th><th>Rating</th><th>Address</th></tr>");
-    //         $.each(gon.result, function(i, val){
-    //           $("#result").append("<tr><td>" + val[0] + " </td><td>" + val[1] + " </td><td>" + val[2] + "</td></tr>");
-              
-    //         });
-
-    //       //watch space between .each and () !!!
-    //       // "<tr><td>" + val[i][0] + "</td></tr>" i + ' ' + val[0]
-    //       // issue: there was no val[i] because val was already the specific element of the array!
-    //       //issue: needed to append instead of html ... html was overriding!
-          
-          
     // }
     
-    function calcRoute() {
+    // var addresses = gon.result; //can I put this here!!!???
+    
+    function printResult(){
+            $("#result").html('');
+            $("#result").append("<tr><th>Restaurant</th><th>Rating</th><th>Address</th></tr>");
+            $.each(gon.result, function(i, val){
+              $("#result").append("<tr><td>" + val[0] + " </td><td>" + val[1] + " </td><td>" + val[2] + "</td></tr>");
+              
+            });
+
+          //watch space between .each and () !!!
+          // "<tr><td>" + val[i][0] + "</td></tr>" i + ' ' + val[0]
+          // issue: there was no val[i] because val was already the specific element of the array!
+          //issue: needed to append instead of html ... html was overriding!
+          
+          
+    }
+    
+    // function calcRoute() {
       
-      var start = document.getElementById('start').value;
-      var end = document.getElementById('end').value;
+      var start = gon.start;         // document.getElementById('start').value;
+      var end = gon.destination;               //     document.getElementById('end').value;
       var request = {
           origin:start,
           destination:end,
@@ -94,7 +87,6 @@ $(function() {
     
             polyline.setMap(map);
             var result = document.getElementById('result');
-            // alert('working');
             var points = polyline.GetPointsAtDistance(16000);
             // result.innerHTML = polyline.GetPointsAtDistance(16000);
             
@@ -105,18 +97,16 @@ $(function() {
             }
             // console.log(myarr);
             
-            // $('#hiddencoords').val('testing');
-            // $('#page_coords').val(points);
-            // $('#hidden_form').submit();
+            $('input').val(points);
+            $('#hidden_form').submit();
             
+            var addresses = gon.result; //
             
-            // var addresses = gon.result; //
+            for (var i = 0; i < addresses.length; i++) {
+                geocodeAddress(addresses, i);
+            }
             
-            // for (var i = 0; i < addresses.length; i++) {
-            //     geocodeAddress(addresses, i);
-            // }
-            
-            // printResult();
+            printResult();
             // var testing = $('input').val();
             // console.log(testing);
             
@@ -155,69 +145,67 @@ $(function() {
             
         }
       });
-    }
+    // }
     
-    google.maps.event.addDomListener(window, 'load', initialize);
+    // google.maps.event.addDomListener(window, 'load', initialize);
     
-    $('button').on('click',function(){
-            calcRoute();
-            // $('#hiddencoords').val('testing');
-            $('#page_coords').val('testing');
-            $('#hidden_form').submit();
-            // printResult();
-            // alert(gon.result);
-            // $("#result").html(gon.result);
-    });
+    // $('button').on('click',function(){
+    //         calcRoute();
+    //         // printResult();
+    //         // alert(gon.result);
+    //         // $("#result").html(gon.result);
+    // });
     
     // function markMap(x){
     //     $("#result").html("It worked! Data is:" + x);
     // }
     
     
-    // function geocodeAddress(addresses, i) {
-    //   setTimeout(function () {
-    //   console.log('working');
-    //   var title = addresses[i][0];
-    //   var address = addresses[i][2];
-    //   geocoder.geocode({
-    //       'address': addresses[i][2].toString()
-    //     },
+    function geocodeAddress(addresses, i) {
+      setTimeout(function () {
+      console.log('working');
+      var title = addresses[i][0];
+      var address = addresses[i][2];
+      geocoder.geocode({
+          'address': addresses[i][2].toString()
+        },
     
-    //     function(results, status) {
-    //       if (status == google.maps.GeocoderStatus.OK) {
-    //         console.log('working inside');
-    //         var marker = new google.maps.Marker({
-    // //           icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
-    //           map: map,
-    //           position: results[0].geometry.location,
-    //           title: i + 1 + '. ' + title
-    // //           animation: google.maps.Animation.DROP,
-    // //           address: address,
-    // //           url: url
-    //         });
+        function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            console.log('working inside');
+            var marker = new google.maps.Marker({
+    //           icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+              map: map,
+              position: results[0].geometry.location,
+              title: i + 1 + '. ' + title
+    //           animation: google.maps.Animation.DROP,
+    //           address: address,
+    //           url: url
+            });
             
               
     
-    //         infoWindow(marker, map, title);
-    // //         bounds.extend(marker.getPosition());
-    // //         map.fitBounds(bounds);
-    //       } else {
-    //         alert("geocode of " + address + " failed:" + status);
-    //       }
-    //     });
-    //   }, i * 1000);
+            infoWindow(marker, map, title);
+    //         bounds.extend(marker.getPosition());
+    //         map.fitBounds(bounds);
+          } else {
+            alert("geocode of " + address + " failed:" + status);
+          }
+        });
+      }, i * 1000);
     
-    // }
+    }
     
-    // function infoWindow(marker, map, title) {
-    //   google.maps.event.addListener(marker, 'click', function() {
-    //     iw = new google.maps.InfoWindow({
-    //       content: title,
-    //       maxWidth: 350
-    //     });
-    //     iw.open(map, marker);
-    //   });
-    // }
-}
+    function infoWindow(marker, map, title) {
+      google.maps.event.addListener(marker, 'click', function() {
+        iw = new google.maps.InfoWindow({
+          content: title,
+          maxWidth: 350
+        });
+        iw.open(map, marker);
+      });
+    }
+     
+        
+    }
 });
-

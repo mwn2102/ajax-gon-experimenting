@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701163029) do
+ActiveRecord::Schema.define(version: 20150722170836) do
 
   create_table "pages", force: :cascade do |t|
     t.text     "name"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20150701163029) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text     "coords"
+    t.text     "start"
+    t.text     "end"
   end
 
 end

@@ -39,11 +39,11 @@ class PagesController < ApplicationController
     def new
         @page = Page.new
         # @result = Page.last.coords
-        gon.result = Page.yelp(Page.last.coords) #gon needs to be defined to show map 
-        respond_to do |format|
-          format.html
-          format.json
-        end
+        # gon.result = Page.yelp(Page.last.coords) #gon needs to be defined to show map 
+        # respond_to do |format|
+        #   format.html
+        #   format.json
+        # end
         
     end
     
@@ -61,10 +61,11 @@ class PagesController < ApplicationController
       # gon.result = Page.yelp(@page.coords) #this was working
     #   gon.val4 = Page.yelp(@page.score)
       if @page.save 
-        gon.result = Page.yelp(@page.coords)
+        redirect_to page_path(@page)
+        # gon.result = Page.yelp(@page.coords)
         # flash.now =  "it worked"
         # redirect_to '/'
-        render json: {location: @page}      #this was working with @page.coords
+        # render json: {location: @page}      #this was working with @page.coords
         # render @page
         # render edit_page_path(@page)   #new stuff
         # respond_to do |format|
@@ -86,6 +87,10 @@ class PagesController < ApplicationController
     def show
       # @page = Page.last.coords
       @page = Page.find(params[:id])
+      gon.start = @page.start
+      gon.destination = @page.end
+      # gon.result = Page.yelp(@page.coords) #this is correct code
+      gon.result = @page.coords
       # gon.result = Page.yelp(Page.last.coords)  crossing out
     end
     
@@ -106,7 +111,7 @@ class PagesController < ApplicationController
     
     private 
         def page_params 
-          params.require(:page).permit(:name, :score, :coords) 
+          params.require(:page).permit(:name, :score, :coords, :start, :end) 
         end
     
     
