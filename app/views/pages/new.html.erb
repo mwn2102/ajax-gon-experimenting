@@ -5,44 +5,57 @@
 <!--<div id="mydiv"></div>-->
 <!--<div id="seconddiv"></div>-->
 <!---->
+<div id="new_page"></div>
 <div id="panel">
+<!--<button>Calculate</button>-->
+  
+<%= form_for (@page), html: {id: "hidden_form"} do |f| %> 
+    <p><%= f.hidden_field :coords %> </p>
+  <p>
+    <%= f.label :start %><br/>
+    <%= f.text_field :start %>
+  </p>
+  <p>
+    <%= f.label :end %><br/>
+    <%= f.text_field :end %>
+  </p>
+
 <button>Calculate</button>
-<b>Start: </b>
-<select id="start">
-  <option value="chicago, il">Chicago</option>
-  <option value="st louis, mo">St Louis</option>
-  <option value="joplin, mo">Joplin, MO</option>
-  <option value="oklahoma city, ok">Oklahoma City</option>
-  <option value="amarillo, tx">Amarillo</option>
-  <option value="gallup, nm">Gallup, NM</option>
-  <option value="flagstaff, az">Flagstaff, AZ</option>
-  <option value="winona, az">Winona</option>
-  <option value="walnut creek, ca">Walnut Creek</option>
-  <option value="barstow, ca">Barstow</option>
-  <option value="san bernardino, ca">San Bernardino</option>
-  <option value="los angeles, ca">Los Angeles</option>
-</select>
-<b>End: </b>
-<select id="end">
-  <option value="chicago, il">Chicago</option>
-  <option value="st louis, mo">St Louis</option>
-  <option value="joplin, mo">Joplin, MO</option>
-  <option value="oklahoma city, ok">Oklahoma City</option>
-  <option value="amarillo, tx">Amarillo</option>
-  <option value="gallup, nm">Gallup, NM</option>
-  <option value="flagstaff, az">Flagstaff, AZ</option>
-  <option value="walnut creek, ca">Walnut Creek</option>
-  <option value="santa rosa, ca">Santa Rosa</option>
-  <option value="barstow, ca">Barstow</option>
-  <option value="san bernardino, ca">San Bernardino</option>
-  <option value="los angeles, ca">Los Angeles</option>
-</select>
+  
+<% end %>
+
+<!--<b>Start: </b>-->
+<!--<select id="start">-->
+<!--  <option value="chicago, il">Chicago</option>-->
+<!--  <option value="st louis, mo">St Louis</option>-->
+<!--  <option value="joplin, mo">Joplin, MO</option>-->
+<!--  <option value="oklahoma city, ok">Oklahoma City</option>-->
+<!--  <option value="amarillo, tx">Amarillo</option>-->
+<!--  <option value="gallup, nm">Gallup, NM</option>-->
+<!--  <option value="flagstaff, az">Flagstaff, AZ</option>-->
+<!--  <option value="winona, az">Winona</option>-->
+<!--  <option value="walnut creek, ca">Walnut Creek</option>-->
+<!--  <option value="barstow, ca">Barstow</option>-->
+<!--  <option value="san bernardino, ca">San Bernardino</option>-->
+<!--  <option value="los angeles, ca">Los Angeles</option>-->
+<!--</select>-->
+<!--<b>End: </b>-->
+<!--<select id="end">-->
+<!--  <option value="chicago, il">Chicago</option>-->
+<!--  <option value="st louis, mo">St Louis</option>-->
+<!--  <option value="joplin, mo">Joplin, MO</option>-->
+<!--  <option value="oklahoma city, ok">Oklahoma City</option>-->
+<!--  <option value="amarillo, tx">Amarillo</option>-->
+<!--  <option value="gallup, nm">Gallup, NM</option>-->
+<!--  <option value="flagstaff, az">Flagstaff, AZ</option>-->
+<!--  <option value="walnut creek, ca">Walnut Creek</option>-->
+<!--  <option value="santa rosa, ca">Santa Rosa</option>-->
+<!--  <option value="barstow, ca">Barstow</option>-->
+<!--  <option value="san bernardino, ca">San Bernardino</option>-->
+<!--  <option value="los angeles, ca">Los Angeles</option>-->
+<!--</select>-->
 </div>
 
-<%= form_for (@page), html: {id: "hidden_form"}, remote: true do |f| %> 
-    <%= f.hidden_field "coords" %>
-    <%= f.submit%> 
-<% end %>
 
 
 
@@ -50,3 +63,4 @@
 
 <div id="map-canvas"></div>
 <div id="result"></div>
+<!--</div>-->
