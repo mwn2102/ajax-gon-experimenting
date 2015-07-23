@@ -89,8 +89,8 @@ class PagesController < ApplicationController
       @page = Page.find(params[:id])
       gon.start = @page.start
       gon.destination = @page.end
-      # gon.result = Page.yelp(@page.coords) #this is correct code
-      gon.result = @page.coords
+      gon.result = Page.yelp(@page.coords) #this is correct code
+      # gon.result = @page.coords
       # gon.result = Page.yelp(Page.last.coords)  crossing out
     end
     

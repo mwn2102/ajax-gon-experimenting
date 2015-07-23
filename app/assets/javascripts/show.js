@@ -7,14 +7,14 @@ $(document).ready(function(){
     var map;
     var polyline = null; 
     var geocoder;
-    $('#result').html("working?");
+    // $('#result').html("working?");
     
     // function initialize() {
       directionsDisplay = new google.maps.DirectionsRenderer();
       var chicago = new google.maps.LatLng(41.850033, -87.6500523);
       geocoder = new google.maps.Geocoder(); 
       var mapOptions = {
-        zoom:7,
+        zoom:3,
         center: chicago
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -28,12 +28,12 @@ $(document).ready(function(){
     //     End
     // }
     
-    // var addresses = gon.result; //can I put this here!!!???
+    var addresses = gon.result; //can I put this here!!!???
     
     function printResult(){
-            $("#result").html('');
+            // $("#result").html('');
             $("#result").append("<tr><th>Restaurant</th><th>Rating</th><th>Address</th></tr>");
-            $.each(gon.result, function(i, val){
+            $.each(addresses, function(i, val){
               $("#result").append("<tr><td>" + val[0] + " </td><td>" + val[1] + " </td><td>" + val[2] + "</td></tr>");
               
             });
@@ -97,10 +97,10 @@ $(document).ready(function(){
             }
             // console.log(myarr);
             
-            $('input').val(points);
-            $('#hidden_form').submit();
+            // $('input').val(points);
+            // $('#hidden_form').submit();
             
-            var addresses = gon.result; //
+            // var addresses = gon.result; //
             
             for (var i = 0; i < addresses.length; i++) {
                 geocodeAddress(addresses, i);
@@ -177,7 +177,8 @@ $(document).ready(function(){
     //           icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
               map: map,
               position: results[0].geometry.location,
-              title: i + 1 + '. ' + title
+              title: i + 1 + '. ' + title,
+              animation: google.maps.Animation.DROP
     //           animation: google.maps.Animation.DROP,
     //           address: address,
     //           url: url
@@ -192,7 +193,7 @@ $(document).ready(function(){
             alert("geocode of " + address + " failed:" + status);
           }
         });
-      }, i * 1000);
+      }, i * 1000); // i * 1000
     
     }
     

@@ -21,7 +21,7 @@ $(function() {
       var chicago = new google.maps.LatLng(41.850033, -87.6500523);
       geocoder = new google.maps.Geocoder(); 
       var mapOptions = {
-        zoom:7,
+        zoom:3,
         center: chicago
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -55,8 +55,10 @@ $(function() {
     
     function calcRoute() {
       
-      var start = document.getElementById('start').value;
-      var end = document.getElementById('end').value;
+      // var start = document.getElementById('start').value;
+      // var end = document.getElementById('end').value;
+      var start = $('#page_start').val();
+      var end = $('#page_end').val();
       var request = {
           origin:start,
           destination:end,
@@ -105,9 +107,9 @@ $(function() {
             }
             // console.log(myarr);
             
-            // $('#hiddencoords').val('testing');
-            // $('#page_coords').val(points);
-            // $('#hidden_form').submit();
+            // $('#page_coords').val('testing');
+            $('#page_coords').val(points);
+            $('#hidden_form').submit();
             
             
             // var addresses = gon.result; //
@@ -162,8 +164,8 @@ $(function() {
     $('button').on('click',function(){
             calcRoute();
             // $('#hiddencoords').val('testing');
-            $('#page_coords').val('testing');
-            $('#hidden_form').submit();
+            // $('#page_coords').val('testing');
+            // $('#hidden_form').submit();
             // printResult();
             // alert(gon.result);
             // $("#result").html(gon.result);
