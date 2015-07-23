@@ -104,7 +104,8 @@ $(function() {
             }
             // console.log(myarr);
             
-            $('input').val(points);
+            // $('input').val(points);
+            $('#page_coords').val(points);
             $('#hidden_form').submit();
             
             var addresses = gon.result; //
